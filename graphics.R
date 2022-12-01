@@ -218,16 +218,16 @@ barplot(counts, main="Distribuição de alunos por semestre", xlab="Semestre", y
 View(prop.table(table(sexo,periodo)))
 p <- as.numeric(as.character(factor(prop.table(table(sexo,periodo)))))
 #solução:
-p[1]+p[3]
+(p[1]+p[3])*100
 
 #Qual probabilidade de um estudante de renda acima de 6 a 8 salários participar de 70% das aulas?
 View(prop.table(table(renda,participacao)))
 p <- as.numeric(as.character(factor(prop.table(table(renda,participacao)))))
 #solução
-p[8]
+p[8]*100
 
 #Qual a probabilidade de um aluno acima de 20 até 24 anos trabalhar e estudar acima de 6 a 9 horas?
 View(prop.table(table(idade,trabalho,estudo)))
 p <- as.numeric(as.character(factor(prop.table(table(idade,trabalho,estudo)))))
 #solução:
-p[26]
+p[26]*100

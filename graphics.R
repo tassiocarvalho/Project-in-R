@@ -38,8 +38,6 @@ tabMedidasDesc = function (nome) {
 
 ###########################################################################################
 #### Trocando os nomes #####
-names(BancoEstatistica)[2] <- c("Idade")
-names(BancoEstatistica)[9] <- c("EstudoDiario")
 BancoEstatistica <- trocandoNomeColuna("Periodo","periodo")
 BancoEstatistica <- trocandoNomeColuna("Semestre que está cursando","semestre")
 BancoEstatistica <- trocandoNomeColuna("Renda familiar","renda")
@@ -68,7 +66,7 @@ names(BancoEstatistica)
 slices <- table(semestre)
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
-lbls <- paste(lbls,"º semestre -" ,pct) # add percents to labels
+lbls <- paste(lbls,"-" ,pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Semestre que está cursando: ")
 
@@ -84,7 +82,7 @@ pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Periodo de estudo:")
 slices <- table(idade)
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
-lbls <- paste(lbls,"anos -", pct) # add percents to labels
+lbls <- paste(lbls,"-", pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Idade dos alunos:")
 
@@ -98,7 +96,7 @@ pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Sexo dos alunos:")
 slices <- table(renda)
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
-lbls <- paste(lbls,"salário - ", pct) # add percents to labels
+lbls <- paste(lbls," - ", pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Salário familiar:")
 
@@ -119,7 +117,7 @@ pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Os alunos moram com:
 slices <- table(estudo)
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
-lbls <- paste(lbls,"horas -", pct) # add percents to labels
+lbls <- paste(lbls,"-", pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Horas de estudo dos alunos:")
 
@@ -206,3 +204,12 @@ pct <- round(slices/sum(slices)*100)
 lbls <- paste(lbls,"-", pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Você participa de mais de 70% das aulas?")
+
+counts <- table(idade)
+barplot(counts, main="Faixa etária dos alunos", xlab="Idade em anos", ylab = "Quantidade de alunos", col = rainbow(15))
+
+counts <- table(participacao)
+barplot(counts, main="Você participa de mais de 70% das aulas?", xlab="Sim/Não", ylab = "Quantidade de alunos", col = rainbow(15))
+
+counts <- table(semestre)
+barplot(counts, main="Distribuição de alunos por semestre", xlab="Semestre", ylab="Número de alunos", cex.names = 0.8, col = rainbow(15))

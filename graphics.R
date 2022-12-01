@@ -1,3 +1,7 @@
+##################################################
+###      Projeto avaliação da universidada     ###
+##################################################
+
 library(readxl)
 BancoEstatistica <- read_excel("C:/Users/tassi/Desktop/BancoEstatistica.xlsx")
 View(BancoEstatistica)
@@ -220,7 +224,7 @@ barplot(counts, main="Distribuição de alunos por semestre", xlab="Semestre", y
 View(prop.table(table(sexo,periodo)))
 p <- as.numeric(as.character(factor(prop.table(table(sexo,periodo)))))
 #solução:
-(p[1]+p[3])*100
+((p[1]+p[3])*100)
 
 #Qual probabilidade de um estudante de renda acima de 6 a 8 salários participar de 70% das aulas?
 View(prop.table(table(renda,participacao)))
@@ -233,3 +237,8 @@ View(prop.table(table(idade,trabalho,estudo)))
 p <- as.numeric(as.character(factor(prop.table(table(idade,trabalho,estudo)))))
 #solução:
 p[26]*100
+
+#Qual a probabilidade de um aluno que avalia laboratório da universidade ruim e avalia qualidade de ensino bom do sexo masculino?
+View(prop.table(table(sexo,ensino,laboratorio)))
+p <- as.numeric(as.character(factor(prop.table(table(sexo,ensino,laboratorio)))))
+p[14]*100

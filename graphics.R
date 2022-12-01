@@ -213,3 +213,21 @@ barplot(counts, main="Você participa de mais de 70% das aulas?", xlab="Sim/Não
 
 counts <- table(semestre)
 barplot(counts, main="Distribuição de alunos por semestre", xlab="Semestre", ylab="Número de alunos", cex.names = 0.8, col = rainbow(15))
+
+#Qual a probabilidade de um estudante de sexo feminino estudar no periódo noturno ou diurno? 
+View(prop.table(table(sexo,periodo)))
+p <- as.numeric(as.character(factor(prop.table(table(sexo,periodo)))))
+#solução:
+p[1]+p[3]
+
+#Qual probabilidade de um estudante de renda acima de 6 a 8 salários participar de 70% das aulas?
+View(prop.table(table(renda,participacao)))
+p <- as.numeric(as.character(factor(prop.table(table(renda,participacao)))))
+#solução
+p[8]
+
+#Qual a probabilidade de um aluno acima de 20 até 24 anos trabalhar e estudar acima de 6 a 9 horas?
+View(prop.table(table(idade,trabalho,estudo)))
+p <- as.numeric(as.character(factor(prop.table(table(idade,trabalho,estudo)))))
+#solução:
+p[26]

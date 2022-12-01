@@ -2,7 +2,9 @@ library(readxl)
 BancoEstatistica <- read_excel("C:/Users/tassi/Desktop/BancoEstatistica.xlsx")
 View(BancoEstatistica)
 
-
+# pacotes instalados:
+#install.packages('readxl') #importar banco em excel
+#install.packages('descr') #crosstable e teste qui-quadrado
 library(readxl) #importar banco em excel
 library(descr)#crosstable
 
@@ -20,7 +22,7 @@ trocandoNomeColuna <- function (nome, novoNome) {
   return(x)
 }
 
-## Função que dá as medidas descritivas ##
+## Função que calcula as medidas descritivas ##
 tabMedidasDesc = function (nome) {
   nomes <- c("mín","máx", "Média","Médiana","Amplitude","Desvio padrão", "Variância","coeficiente de variação")
   minimo <- min(nome)

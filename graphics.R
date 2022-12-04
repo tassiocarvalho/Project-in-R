@@ -1,9 +1,11 @@
 ##################################################
-###      Projeto avaliação da universidada     ###
+###      Projeto avaliação da universidade     ###
 ##################################################
 
 library(readxl)
-BancoEstatistica <- read_excel("C:/Users/tassi/Desktop/BancoEstatistica.xlsx")
+setwd("C:/Users/BRUNO/git/Project-in-R/Database")
+BancoEstatistica <- read.csv('BancoEstatistica.csv', sep = ';', dec = ',', stringsAsFactors = T)
+
 View(BancoEstatistica)
 
 # pacotes instalados:
@@ -45,38 +47,36 @@ tabMedidasDesc = function (nome) {
 ###########################################################################################
 #### Trocando os nomes #####
 BancoEstatistica <- trocandoNomeColuna("Periodo","periodo")
-BancoEstatistica <- trocandoNomeColuna("Semestre que está cursando","semestre")
-BancoEstatistica <- trocandoNomeColuna("Renda familiar","renda")
+BancoEstatistica <- trocandoNomeColuna("Semestre.que.está.cursando","semestre")
+BancoEstatistica <- trocandoNomeColuna("Renda.familiar","renda")
 BancoEstatistica <- trocandoNomeColuna("Idade","idade")
 BancoEstatistica <- trocandoNomeColuna("Sexo","sexo")
-BancoEstatistica <- trocandoNomeColuna("Você trabalha ?","trabalho")
-BancoEstatistica <- trocandoNomeColuna("Mora com quem ?","moradia")
-BancoEstatistica <- trocandoNomeColuna("Tempo de estudo diário","estudo")
-BancoEstatistica <- trocandoNomeColuna("A infraestrutura das salas de aula e de estudo são adequadas?","salas")
-BancoEstatistica <- trocandoNomeColuna("A infraestrutura das bibliotecas são boas?","infrabib")
-BancoEstatistica <- trocandoNomeColuna("Como você avalia a estrutura geral da universidade?","estrutura")
-BancoEstatistica <- trocandoNomeColuna("Como você avalia a internet da universidade?","internet")
-BancoEstatistica <- trocandoNomeColuna("Como você avalia o laboratório da universidade?","laboratorio")
-BancoEstatistica <- trocandoNomeColuna("Como você avalia a qualidade de ensino?","ensino")
-BancoEstatistica <- trocandoNomeColuna("O atendimento nas secretarias são bons?","secretarias")
-BancoEstatistica <- trocandoNomeColuna("No geral a relação professor aluno era boa e favorecia o processo de ensino-aprendizagem?","aprendizagem")
-BancoEstatistica <- trocandoNomeColuna("No geral os métodos de avaliação são consistentes com os conteúdos apresentados?","avaliacao")
-BancoEstatistica <- trocandoNomeColuna("Você se dedica as disciplinas mais de 3 horas por semana fora da sala de aula?","dedicacao")
-BancoEstatistica <- trocandoNomeColuna("Você participa intensamente dos trabalhos em classe e fora de classe?","trabalhos")
-BancoEstatistica <- trocandoNomeColuna("Você participa de mais de 70% das aulas?","participacao")
-
+BancoEstatistica <- trocandoNomeColuna("Você.trabalha.?","trabalho")
+BancoEstatistica <- trocandoNomeColuna("Mora.com.quem.?","moradia")
+BancoEstatistica <- trocandoNomeColuna("Tempo.de.estudo.diário","estudo")
+BancoEstatistica <- trocandoNomeColuna("A.infraestrutura.das.salas.de.aula.e.de.estudo.são.adequadas?","salas")
+BancoEstatistica <- trocandoNomeColuna("A.infraestrutura.das.bibliotecas.são.boas?","infrabib")
+BancoEstatistica <- trocandoNomeColuna("Como.você.avalia.a.estrutura.geral.da.universidade?","estrutura")
+BancoEstatistica <- trocandoNomeColuna("Como.você.avalia.a.internet.da.universidade?","internet")
+BancoEstatistica <- trocandoNomeColuna("Como.você.avalia.o.laboratório.da.universidade?","laboratorio")
+BancoEstatistica <- trocandoNomeColuna("Como.você.avalia.a.qualidade.de.ensino?","ensino")
+BancoEstatistica <- trocandoNomeColuna("O.atendimento.nas.secretarias.são.bons?","secretarias")
+BancoEstatistica <- trocandoNomeColuna("No.geral.a.relação.professor.aluno.era.boa.e.favorecia.o.processo.de.ensino.aprendizagem.","aprendizagem")
+BancoEstatistica <- trocandoNomeColuna("No.geral.os.métodos.de.avaliação.são.consistentes.com.os.conteúdos.apresentados?","avaliacao")
+BancoEstatistica <- trocandoNomeColuna("Você.se.dedica.as.disciplinas.mais.de.3.horas.por.semana.fora.da.sala.de.aula?","dedicacao")
+BancoEstatistica <- trocandoNomeColuna("Você.participa.intensamente.dos.trabalhos.em.classe.e.fora.de.classe?","trabalhos")
+BancoEstatistica <- trocandoNomeColuna("Você.participa.de.mais.de.70..das.aulas.","participacao")
 
 attach(BancoEstatistica)
 names(BancoEstatistica)
 
-slices <- table(semestre)
+slices <- table(cut(BancoEstatistica$semestre, seq(1,15, l = 8)))
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
 lbls <- paste(lbls,"-" ,pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Semestre que está cursando: ")
 
-#Gráfico de pizza de periodo#
 slices <- table(periodo)
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
@@ -84,8 +84,7 @@ lbls <- paste(lbls,"-", pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Periodo de estudo:")
 
-#Gráfico de pizza de periodo#
-slices <- table(idade)
+slices <- table(cut(BancoEstatistica$idade, seq(18,42, l = 7 )))
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
 lbls <- paste(lbls,"-", pct) # add percents to labels
@@ -99,7 +98,7 @@ lbls <- paste(lbls,"-", pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Sexo dos alunos:")
 
-slices <- table(renda)
+slices <- table(cut(BancoEstatistica$renda, seq(0.5,8.5, l = 8 )))
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
 lbls <- paste(lbls," - ", pct) # add percents to labels
@@ -120,7 +119,7 @@ lbls <- paste(lbls,"-", pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Os alunos moram com:")
 
-slices <- table(estudo)
+slices <- slices <- table(cut(BancoEstatistica$estudo, seq(0,16, l = 7 )))
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
 lbls <- paste(lbls,"-", pct) # add percents to labels
@@ -210,6 +209,16 @@ pct <- round(slices/sum(slices)*100)
 lbls <- paste(lbls,"-", pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Você participa de mais de 70% das aulas?")
+
+#################### Pegando as medidas descritivas dos dados quantitativos ####################
+#### Medidas descritivas ####
+
+View(tabMedidasDesc(table(idade)))
+View(tabMedidasDesc(table(semestre)))
+View(tabMedidasDesc(table(renda)))
+View(tabMedidasDesc(table(estudo)))
+
+View(BancoEstatistica$periodo)
 
 counts <- table(idade)
 barplot(counts, main="Faixa etária dos alunos", xlab="Idade em anos", ylab = "Quantidade de alunos", col = rainbow(15))

@@ -3,7 +3,8 @@
 ##################################################
 
 library(readxl)
-setwd("C:/Users/BRUNO/git/Project-in-R/Database")
+#setwd("C:/Users/BRUNO/git/Project-in-R/Database")
+setwd("C:/Users/tassi/Desktop/Banco/UTF-8")
 BancoEstatistica <- read.csv('BancoEstatistica.csv', sep = ';', dec = ',', stringsAsFactors = T)
 
 View(BancoEstatistica)
@@ -70,7 +71,7 @@ BancoEstatistica <- trocandoNomeColuna("Você.participa.de.mais.de.70..das.aulas
 attach(BancoEstatistica)
 names(BancoEstatistica)
 
-slices <- table(cut(BancoEstatistica$semestre, seq(1,15, l = 8)))
+slices <- table(cut(BancoEstatistica$semestre, seq(1,15, l = 7)))
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
 lbls <- paste(lbls,"-" ,pct) # add percents to labels
@@ -221,10 +222,13 @@ View(tabMedidasDesc(table(estudo)))
 View(BancoEstatistica$periodo)
 
 counts <- table(idade)
-barplot(counts, main="Faixa etária dos alunos", xlab="Idade em anos", ylab = "Quantidade de alunos", col = rainbow(15))
+barplot(counts, main="Faixa etária dos alunos", xlab="Idade em anos", ylab = "Número de alunos", col = rainbow(15))
 
-counts <- table(participacao)
-barplot(counts, main="Você participa de mais de 70% das aulas?", xlab="Sim/Não", ylab = "Quantidade de alunos", col = rainbow(15))
+counts <- table(renda)
+barplot(counts, main="Renda familiar dos alunos", xlab="Salário", ylab = "Número de alunos", col = rainbow(15))
+
+counts <- table(estudo)
+barplot(counts, main="Hora de estudos dos alunos", xlab="Horas", ylab = "Número de alunos", col = rainbow(15))
 
 counts <- table(semestre)
 barplot(counts, main="Distribuição de alunos por semestre", xlab="Semestre", ylab="Número de alunos", cex.names = 0.8, col = rainbow(15))

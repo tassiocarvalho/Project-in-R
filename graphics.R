@@ -2,6 +2,27 @@
 ###      Projeto avaliação da universidade     ###
 ##################################################
 
+if(!require(dplyr))
+  install.packages("dplyr")
+if(!require(car))
+  install.packages("car")
+if(!require(psych))
+  install.packages("psych")
+if(!require(pacman))
+  install.packages("pacman")
+if(!require(tidyverse))
+  install.packages("tidyverse")
+if(!require(ggplot2))
+  install.packages("ggplot2")
+
+#################### Carregando pacotes ####################
+require (ggplot2)
+require(tidyverse)
+require(dplyr)
+require(car)
+require(psych)
+pacman::p_load(ggplot2,dplyr)
+
 library(readxl)
 #setwd("C:/Users/BRUNO/git/Project-in-R/Database")
 setwd("C:/Users/tassi/Desktop/Banco/UTF-8")
@@ -71,7 +92,7 @@ BancoEstatistica <- trocandoNomeColuna("Você.participa.de.mais.de.70..das.aulas
 attach(BancoEstatistica)
 names(BancoEstatistica)
 
-slices <- table(cut(BancoEstatistica$semestre, seq(1,15, l = 7)))
+slices <- table(cut(BancoEstatistica$semestre, seq(1,15, l = 8)))
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
 lbls <- paste(lbls,"-" ,pct) # add percents to labels
@@ -120,7 +141,7 @@ lbls <- paste(lbls,"-", pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Os alunos moram com:")
 
-slices <- slices <- table(cut(BancoEstatistica$estudo, seq(0,16, l = 7 )))
+slices <- slices <- table(cut(BancoEstatistica$estudo, seq(0,16, l = 8 )))
 lbls <- names(slices)
 pct <- round(slices/sum(slices)*100)
 lbls <- paste(lbls,"-", pct) # add percents to labels
@@ -214,26 +235,27 @@ pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Você participa de m
 #################### Pegando as medidas descritivas dos dados quantitativos ####################
 #### Medidas descritivas ####
 
-View(tabMedidasDesc(table(idade)))
-View(tabMedidasDesc(table(semestre)))
-View(tabMedidasDesc(table(renda)))
-View(tabMedidasDesc(table(estudo)))
+
+View(describe(summary(BancoEstatistica$idade)))
+View(describe(summary(BancoEstatistica$semestre)))
+View(describe(summary(BancoEstatistica$renda)))
+View(describe(summary(BancoEstatistica$estudo)))
 
 View(BancoEstatistica$periodo)
 
-counts <- table(idade)
+counts <- table(cut(BancoEstatistica$idade, seq(18,42, l = 7 )))
 barplot(counts, main="Faixa etária dos alunos", xlab="Idade em anos", ylab = "Número de alunos", col = rainbow(15))
 
-counts <- table(renda)
+counts <- table(cut(BancoEstatistica$renda, seq(0.5,8.5, l = 8 )))
 barplot(counts, main="Renda familiar dos alunos", xlab="Salário", ylab = "Número de alunos", col = rainbow(15))
 
-counts <- table(estudo)
+counts <- table(cut(BancoEstatistica$estudo, seq(0,16, l = 8 )))
 barplot(counts, main="Hora de estudos dos alunos", xlab="Horas", ylab = "Número de alunos", col = rainbow(15))
 
-counts <- table(semestre)
+counts <- table(cut(BancoEstatistica$semestre, seq(1,15, l = 8)))
 barplot(counts, main="Distribuição de alunos por semestre", xlab="Semestre", ylab="Número de alunos", cex.names = 0.8, col = rainbow(15))
 
-#Qual a probabilidade de um estudante de sexo feminino estudar no periódo noturno ou diurno? 
+#Qual a chance de um estudante de sexo feminino estudar no periódo noturno ou diurno? 
 View(prop.table(table(sexo,periodo)))
 p <- as.numeric(as.character(factor(prop.table(table(sexo,periodo)))))
 #solução:
@@ -243,15 +265,9 @@ p <- as.numeric(as.character(factor(prop.table(table(sexo,periodo)))))
 View(prop.table(table(renda,participacao)))
 p <- as.numeric(as.character(factor(prop.table(table(renda,participacao)))))
 #solução
-p[8]*100
+(p[33]*100)+(p[34]*100)+(p[35]*100)
 
-#Qual a probabilidade de um aluno acima de 20 até 24 anos trabalhar e estudar acima de 6 a 9 horas?
-View(prop.table(table(idade,trabalho,estudo)))
-p <- as.numeric(as.character(factor(prop.table(table(idade,trabalho,estudo)))))
-#solução:
-p[26]*100
-
-#Qual a probabilidade de um aluno que avalia laboratório da universidade ruim e avalia qualidade de ensino bom do sexo masculino?
+#Qual a chance de um aluno que avalia laboratório da universidade ruim e avalia qualidade de ensino bom do sexo masculino?
 View(prop.table(table(sexo,ensino,laboratorio)))
 p <- as.numeric(as.character(factor(prop.table(table(sexo,ensino,laboratorio)))))
 p[14]*100

@@ -2,6 +2,15 @@
 ###      Projeto avaliação da universidade     ###
 ##################################################
 
+
+#################### Alunos ######################
+##        Alex da Fonseca Dantas Júnior         ##
+##         Bruno Campos de Oliveira Rocha       ##
+##          Tassio Carvalho Rodrigues           ##
+##           Hugo Ribeiro De O. Filho           ##
+##################################################
+
+
 if(!require(dplyr))
   install.packages("dplyr")
 if(!require(car))
@@ -50,22 +59,6 @@ trocandoNomeColuna <- function (nome, novoNome) {
   return(x)
 }
 
-## Função que calcula as medidas descritivas ##
-tabMedidasDesc = function (nome) {
-  nomes <- c("mín","máx", "Média","Médiana","Amplitude","Desvio padrão", "Variância","coeficiente de variação")
-  minimo <- min(nome)
-  maximo <- max(nome)
-  media <- mean(nome)
-  mediana <- median(nome)
-  amplitude <- diff(range(nome, na.rm=T))
-  dp <- sd(nome)
-  varian <- var(nome)
-  cv <- sd(nome)/mean(nome)*100 
-  valores <- c(minimo,maximo,media,mediana,amplitude,dp,varian,cv)
-  tab <- matrix(valores,ncol=8,dimnames = list(c("Valores"),nomes))
-  print(tab)
-}
-
 ###########################################################################################
 #### Trocando os nomes #####
 BancoEstatistica <- trocandoNomeColuna("Periodo","periodo")
@@ -91,6 +84,9 @@ BancoEstatistica <- trocandoNomeColuna("Você.participa.de.mais.de.70..das.aulas
 
 attach(BancoEstatistica)
 names(BancoEstatistica)
+
+####################################################
+#### Estrutura para gerar os gráficos de pizza #####
 
 slices <- table(cut(BancoEstatistica$semestre, seq(1,15, l = 8)))
 lbls <- names(slices)
@@ -232,16 +228,14 @@ lbls <- paste(lbls,"-", pct) # add percents to labels
 lbls <- paste(lbls,"%",sep="") # ad % to labels
 pie(slices, labels = lbls, col=rainbow(length(lbls)), main="Você participa de mais de 70% das aulas?")
 
-#################### Pegando as medidas descritivas dos dados quantitativos ####################
 #### Medidas descritivas ####
-
 
 View(describe(summary(BancoEstatistica$idade)))
 View(describe(summary(BancoEstatistica$semestre)))
 View(describe(summary(BancoEstatistica$renda)))
 View(describe(summary(BancoEstatistica$estudo)))
 
-View(BancoEstatistica$periodo)
+#### Graficos de barras utilizados####
 
 counts <- table(cut(BancoEstatistica$idade, seq(18,42, l = 7 )))
 barplot(counts, main="Faixa etária dos alunos", xlab="Idade em anos", ylab = "Número de alunos", col = rainbow(15))
@@ -255,19 +249,46 @@ barplot(counts, main="Hora de estudos dos alunos", xlab="Horas", ylab = "Número
 counts <- table(cut(BancoEstatistica$semestre, seq(1,15, l = 8)))
 barplot(counts, main="Distribuição de alunos por semestre", xlab="Semestre", ylab="Número de alunos", cex.names = 0.8, col = rainbow(15))
 
-#Qual a chance de um estudante de sexo feminino estudar no periódo noturno ou diurno? 
+#Relações de probabilidade dos dados da pesquisa
+
+#Tabela de frequencia para entender a relação do sexo dos alunos e do 
+#periodo em que estudam e a sua probabilidade de ocorrencia
 View(prop.table(table(sexo,periodo)))
 p <- as.numeric(as.character(factor(prop.table(table(sexo,periodo)))))
+resposta1 <- ((p[1]+p[3])*100)
 #solução:
-((p[1]+p[3])*100)
+paste(resposta1, "%")
 
-#Qual probabilidade de um estudante de renda acima de 6 a 8 salários participar de 70% das aulas?
+#Tabela de frequencia para entender a relação da renda familiar e participação de 70%
+#dos alunos nas aulas e a sua probabilidade de ocorrencia
 View(prop.table(table(renda,participacao)))
 p <- as.numeric(as.character(factor(prop.table(table(renda,participacao)))))
+resposta2 <- (p[33]*100)+(p[34]*100)+(p[35]*100)
 #solução
-(p[33]*100)+(p[34]*100)+(p[35]*100)
+paste(resposta2, "%")
 
-#Qual a chance de um aluno que avalia laboratório da universidade ruim e avalia qualidade de ensino bom do sexo masculino?
+#Tabela de frequencia para entender a relação do sexo do aluno, da qualidade de ensino 
+#e como avaliam os laboratorios e sua probabilidade  de ocorrencia
 View(prop.table(table(sexo,ensino,laboratorio)))
 p <- as.numeric(as.character(factor(prop.table(table(sexo,ensino,laboratorio)))))
-p[14]*100
+resposta3 <- p[14]*100
+#solução:
+paste(resposta3, "%")
+
+
+#Tabela de frequencia para entender a relação do aluno com trabalho e participação 
+#de 70% das aulas e sua probabilidade de ocorrencia
+View(prop.table(table(trabalho, participacao)))
+p <- as.numeric(as.character(factor(prop.table(table(trabalho, participacao)))))
+resposta4 <- p[4]*100
+#Qual a chance de um aluno trabalhar e participar de mais de 70% das aulas?
+#solução:
+paste(resposta4, "%")
+
+#Tabela de frequencia para entender a relação do sexo do aluno com a participação 
+#nas atividades extra curriculares e do trabalho e sua probabilidade de ocorrencia
+View(prop.table(table(sexo, trabalhos,trabalho)))
+p <- as.numeric(as.character(factor(prop.table(table(sexo, trabalhos)))))
+resposta5 <- p[3]*100
+#solução:
+paste(resposta5, "%")
